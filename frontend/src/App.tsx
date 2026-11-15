@@ -57,6 +57,9 @@ function App() {
     claimResult?.supporting_evidence ?? sampleSupportingEvidence
   const contradictingEvidence =
     claimResult?.contradicting_evidence ?? sampleContradictingEvidence
+  const evidenceCount = supportingEvidence.length + contradictingEvidence.length
+  const supportPercentage =
+    evidenceCount > 0 ? (supportingEvidence.length / evidenceCount) * 100 : 50
 
   useEffect(() => {
     if (!supabase) {
@@ -328,7 +331,7 @@ function App() {
           <h1 className="text-base font-medium text-white">AI and developer jobs</h1>
           <div className="flex items-center gap-3">
             <span className="hidden text-xs sm:inline sm:text-sm">
-              Fact-check preview
+              AI fact-check
             </span>
             {session ? (
               <button
@@ -438,10 +441,13 @@ function App() {
                   </span>
                 </div>
                 <div
-                  aria-label="Sample evidence balance"
+                  aria-label={`Evidence balance: ${supportingEvidence.length} supporting items and ${contradictingEvidence.length} contradicting items`}
                   className="relative my-4 h-2.5 rounded-full bg-gradient-to-r from-[#5eead4] via-[#3b4670] to-[#ff9b85]"
                 >
-                  <span className="absolute left-[71%] top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-[#080c1a] bg-white shadow-[0_0_0_2px_#6a8dff]" />
+                  <span
+                    className="absolute top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-[#080c1a] bg-white shadow-[0_0_0_2px_#6a8dff]"
+                    style={{ left: `${supportPercentage}%` }}
+                  />
                 </div>
                 <div className="flex justify-between text-xs text-[#7f8bad]">
                   <span>Evidence supports</span>
@@ -572,8 +578,8 @@ function App() {
           </div>
           <p className="mt-2 text-center text-xs text-[#64708f]">
             {session
-              ? 'Claims are saved to your account; AI and web search are not connected.'
-              : 'Guest mode: claims are not saved. AI and web search are not connected.'}
+              ? 'Claims are saved to your account.'
+              : 'Guest mode: claims are not saved.'}
           </p>
         </form>
       </main>
