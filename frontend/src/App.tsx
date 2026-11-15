@@ -16,14 +16,49 @@ const suggestions = [
 function App() {
   const [claim, setClaim] = useState('')
   const [submittedClaim, setSubmittedClaim] = useState('')
+  const [apiMessage, setApiMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const trimmedClaim = claim.trim()
 
-    if (trimmedClaim) {
+    if (!trimmedClaim || isSubmitting) {
+      return
+    }
+
+    setErrorMessage('')
+    setApiMessage('')
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/claims', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ claim: trimmedClaim }),
+      })
+      const result = await response.json()
+
+      if (!response.ok) {
+        const detail =
+          typeof result.detail === 'string'
+            ? result.detail
+            : 'The API rejected this claim. Check that it is 3 to 500 characters.'
+        throw new Error(detail)
+      }
+
       setSubmittedClaim(trimmedClaim)
+      setApiMessage(result.message)
       setClaim('')
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : 'An unexpected error occurred while sending the claim.',
+      )
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -40,6 +75,8 @@ function App() {
           className="rounded-xl border border-dashed border-[#3a4a82] px-3 py-2 text-sm text-[#9db4ff] hover:bg-[#111a38]"
           onClick={() => {
             setSubmittedClaim('')
+            setApiMessage('')
+            setErrorMessage('')
             setClaim('')
           }}
           type="button"
@@ -84,11 +121,20 @@ function App() {
                   aria-live="polite"
                   className="rounded-xl border border-[#3a4a82] bg-[#101937] p-4 text-sm text-[#c9d2e6]"
                 >
-                  <strong className="text-[#9db4ff]">Claim received.</strong> The
-                  fact-checking service is not connected yet, so this claim has
-                  not been checked.
+                  <strong className="text-[#9db4ff]">Claim received.</strong>{' '}
+                  {apiMessage}
                 </div>
               </>
+            )}
+
+            {errorMessage && (
+              <div
+                aria-live="assertive"
+                className="rounded-xl border border-[#8b4655] bg-[#2b1420] p-4 text-sm text-[#ffb2b7]"
+                role="alert"
+              >
+                {errorMessage}
+              </div>
             )}
 
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#7f8bad] sm:text-sm">
@@ -212,6 +258,7 @@ function App() {
             <textarea
               className="min-h-12 w-full resize-y bg-transparent px-1 py-1 text-sm text-white outline-none placeholder:text-[#64708f]"
               id="claim-input"
+              maxLength={500}
               onChange={(event) => setClaim(event.target.value)}
               placeholder="Ask a question or paste a claim to verify..."
               rows={2}
@@ -230,15 +277,15 @@ function App() {
               <button
                 aria-label="Submit claim"
                 className="ml-auto grid size-9 place-items-center rounded-xl bg-gradient-to-br from-[#6a8dff] to-[#a58bff] text-lg text-white disabled:cursor-not-allowed disabled:opacity-50"
-                disabled={!claim.trim()}
+                disabled={!claim.trim() || isSubmitting}
                 type="submit"
               >
-                ↑
+                {isSubmitting ? '…' : '↑'}
               </button>
             </div>
           </div>
           <p className="mt-2 text-center text-xs text-[#64708f]">
-            This prototype does not send your claim to a service.
+            Sent to the local API only; AI and web search are not connected.
           </p>
         </form>
       </main>
