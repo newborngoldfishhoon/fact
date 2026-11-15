@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FactCheck AI – UI preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#080c1a;--deep:#050711;--card:#0e1530;--line:#1f2a4d;--tx:#c9d2e6;--mut:#7f8bad;--blue:#6a8dff;--soft:#9db4ff;--vio:#a58bff;--for:#5eead4;--against:#ff9b85;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:radial-gradient(900px 500px at 80% -10%,#1a2150 0%,transparent 60%),var(--bg);color:var(--tx);font:15px/1.6 "Instrument Sans",system-ui,sans-serif}
+h1,h2,h3,.disp{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.02em}
+.app{display:flex;height:100%}
+aside{width:240px;border-right:1px solid var(--line);background:var(--deep);padding:18px 12px;display:flex;flex-direction:column;gap:14px}
+.brand{display:flex;gap:10px;align-items:center;color:#fff;font-size:19px;font-weight:800;padding:0 6px}
+.mark{width:28px;height:28px;border-radius:8px;background:conic-gradient(from 210deg,var(--blue),var(--vio),var(--blue));display:grid;place-items:center;color:var(--bg);font-size:15px}
+.new{border:1px dashed #3a4a82;color:var(--soft);border-radius:12px;padding:9px;text-align:center;font-weight:500}
+.grp{color:var(--mut);font-size:12px;padding:6px 8px 0}
+.it{padding:7px 10px;border-radius:9px;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.it.on{background:#151e42;color:#fff;box-shadow:inset 2px 0 var(--blue)}
+.me{margin-top:auto;font-size:13px;color:var(--mut);padding:0 6px}
+main{flex:1;display:flex;flex-direction:column;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 26px;color:var(--mut);font-size:13px}
+.top b{color:#fff;font-weight:500;font-size:15px}
+.scroll{flex:1;overflow:auto;padding:8px 20px 20px}
+.col{max-width:800px;margin:0 auto;display:grid;gap:22px}
+.you{justify-self:end;max-width:75%;background:#151e42;border:1px solid var(--line);padding:9px 15px;border-radius:16px 16px 4px 16px;color:#e8edff}
+.trace{display:flex;flex-wrap:wrap;gap:6px 0;font-size:13px;color:var(--mut);align-items:center}
+.trace span{display:flex;align-items:center;gap:7px}
+.trace span::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--for);box-shadow:0 0 0 3px #5eead422}
+.trace span+span::before{margin-left:0}
+.trace em{flex:0 0 28px;height:1px;background:var(--line);margin:0 8px;font-style:normal}
+.board{border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#101937,#0b1128);overflow:hidden}
+.claim{padding:22px 26px 6px}
+.claim small{color:var(--mut);font-size:13px}
+.claim h2{margin:4px 0 0;font-size:27px;line-height:1.2;color:#fff;font-weight:800}
+.verdict{padding:14px 26px 22px}
+.vt{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.vt h3{margin:0;font-size:21px;color:var(--against);font-weight:800}
+.vt span{color:var(--mut);font-size:13px}
+.bal{position:relative;height:10px;border-radius:99px;margin:16px 0 8px;background:linear-gradient(90deg,var(--for),#3b4670 50%,var(--against))}
+.pin{position:absolute;top:50%;left:0;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:#fff;border:4px solid var(--bg);box-shadow:0 0 0 2px var(--blue);animation:slide 1.4s cubic-bezier(.2,.8,.2,1) .2s both;--to:71%}
+@keyframes slide{from{left:50%}to{left:var(--to)}}
+.ends{display:flex;justify-content:space-between;font-size:12px;color:var(--mut)}
+.two{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line)}
+.two>div{padding:18px 26px}
+.two>div+div{border-left:1px solid var(--line)}
+.two h4{margin:0 0 8px;font-size:15px;font-weight:600}
+.f h4{color:var(--for)}.c h4{color:var(--against)}
+.two p{margin:0 0 10px;font-size:14px}
+.chip{display:inline-block;min-width:20px;text-align:center;font-size:11px;padding:0 6px;margin-left:3px;border-radius:6px;background:#1a2550;color:var(--soft);border:1px solid #2c3a74}
+.lim{border-top:1px solid var(--line);padding:14px 26px;font-size:14px;color:var(--mut)}
+.src{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.s{border:1px solid var(--line);border-radius:12px;padding:9px 11px;font-size:12.5px;background:#0b1128}
+.s b{color:var(--soft);font-weight:600;margin-right:4px}.s i{display:block;font-style:normal;color:var(--mut);font-size:12px}
+.next{display:flex;flex-wrap:wrap;gap:8px}
+.next span{border:1px solid #33427d;border-radius:99px;padding:6px 14px;font-size:13px;color:var(--soft)}
+.inw{max-width:800px;width:100%;margin:0 auto;padding:0 20px 16px}
+.in{background:#0e1530;border:1px solid #2c3a74;border-radius:18px;padding:12px 14px;box-shadow:0 10px 40px #0007}
+.in p{margin:0 0 10px;color:#64708f}
+.tools{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--mut)}
+.tools span{border:1px solid var(--line);border-radius:9px;padding:3px 10px}
+.tools .go{margin-left:auto;border:0;width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--vio));display:grid;place-items:center;color:#fff}
+.tag{position:fixed;right:12px;top:calc(8px + env(safe-area-inset-top,0px));font-size:12px;background:#1a2550;color:var(--soft);border-radius:8px;padding:3px 9px;z-index:3}
+@media(prefers-reduced-motion:reduce){.pin{animation:none;left:var(--to)}}
+@media(max-width:780px){aside{display:none}.two{grid-template-columns:1fr}.two>div+div{border-left:0;border-top:1px solid var(--line)}.src{grid-template-columns:1fr 1fr}.claim h2{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="tag">Static preview · sample content</div>
+<div class="app">
+<aside>
+ <div class="brand"><div class="mark">✓</div>FactCheck AI</div>
+ <div class="new">New chat</div>
+ <div class="grp">Today</div>
+ <div class="it on">AI and developer jobs</div>
+ <div class="it">The 10% brain myth</div>
+ <div class="grp">Earlier</div>
+ <div class="it">Nuclear energy, both sides</div>
+ <div class="it">Fusion power latest</div>
+ <div class="me">you@example.com · Settings</div>
+</aside>
+<main>
+ <div class="top"><b>AI and developer jobs</b><span>Export PDF</span></div>
+ <div class="scroll"><div class="col">
+  <div class="you">But AI can already generate complete applications.</div>
+  <div class="trace"><span>Understood</span><em></em><span>5 results found</span><em></em><span>4 kept after filtering</span><em></em><span>Answer ready</span></div>
+  <div class="board">
+   <div class="claim"><small>Claim being checked</small><h2>“AI can already replace software developers.”</h2></div>
+   <div class="verdict">
+    <div class="vt"><h3>Mostly overstated</h3><span>Medium confidence · 4 sources</span></div>
+    <div class="bal"><div class="pin"></div></div>
+    <div class="ends"><span>Evidence supports</span><span>Evidence contradicts</span></div>
+   </div>
+   <div class="two">
+    <div class="f"><h4>What supports it</h4>
+     <p>Tools can scaffold working apps from a prompt in minutes.<span class="chip">1</span></p>
+     <p>Routine, well-specified tasks are increasingly automated.<span class="chip">3</span></p></div>
+    <div class="c"><h4>What contradicts it</h4>
+     <p>Requirements, security review and long-term maintenance still need people.<span class="chip">2</span></p>
+     <p>Generated apps are often prototypes, not production systems.<span class="chip">4</span></p></div>
+   </div>
+   <div class="lim">Limits: these sources are early, and some come from tool vendors. Studies of long-term job effects are still thin.</div>
+  </div>
+  <div class="src">
+   <div class="s"><b>1</b>Sample source title<i>example.com</i></div>
+   <div class="s"><b>2</b>Sample source title<i>example.org</i></div>
+   <div class="s"><b>3</b>Sample source title<i>example.net</i></div>
+   <div class="s"><b>4</b>Sample source title<i>example.edu</i></div>
+  </div>
+  <div class="next"><span>Steelman the other side</span><span>What would change this verdict?</span><span>Show me the weakest source</span></div>
+ </div></div>
+ <div class="inw">
+  <div class="in"><p>Ask a question or paste a claim to verify...</p>
+   <div class="tools"><span>Verify claim</span><span>Search the web</span><span>Gemini</span><div class="go">➤</div></div></div>
+ </div>
+</main>
+</div>
+</body>
+</html>
