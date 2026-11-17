@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 @import 'tailwindcss';
 
 :root {
-  font-family: 'Instrument Sans', system-ui, sans-serif;
-  color: #c9d2e6;
-  background: #080c1a;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: #322c29;
+  background: #f8f4e7;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -21,9 +21,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background:
-    radial-gradient(900px 500px at 80% -10%, #1a2150 0%, transparent 60%),
-    #080c1a;
+  background: #f8f4e7;
 }
 
 button,
@@ -38,11 +36,11 @@ button {
 h1,
 h2,
 h3 {
-  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-family: 'Playfair Display', Georgia, serif;
   letter-spacing: -0.02em;
 }
 
 ::selection {
-  color: #fff;
-  background: #526dd1;
+  color: #fffdf7;
+  background: #722f37;
 }
