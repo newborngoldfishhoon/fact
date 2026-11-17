@@ -114,21 +114,15 @@ To turn sign-in on:
    ```text
    VITE_SUPABASE_URL=https://your-project-id.supabase.co
    VITE_SUPABASE_ANON_KEY=your-public-anon-key
-   ```
-
+   ``
 6. Restart Vite, open the app, and click **Sign in**.
-
 The public anon key is designed for browser use with RLS enabled. Never put a
 Supabase `service_role` key or Google client secret in frontend code or
-`frontend/.env.local`.
-
+`frontend/.envlocal`.
 ## Host the app
-
 The backend is prepared for Render in `render.yaml`; the React frontend can be
 deployed to Vercel. Deploy the backend first, then set the frontend's API URL.
-
 ### Render: deploy the FastAPI backend
-
 1. Push the project to GitHub. Do not commit any `.env` files.
 2. In Render, choose **New → Blueprint**, connect the GitHub repository, and
    select this repository. Render will read `render.yaml`.
@@ -139,9 +133,7 @@ deployed to Vercel. Deploy the backend first, then set the frontend's API URL.
    for example `https://factcheck-ai-api.onrender.com`.
 5. In the service's environment settings, set `FRONTEND_ORIGINS` to the
    Vercel site URL after the frontend is deployed.
-
 ### Vercel: deploy the React frontend
-
 1. In Vercel, choose **Add New → Project** and import the same GitHub
    repository.
 2. Set **Root Directory** to `frontend`. Use `npm run build` as the build
@@ -151,14 +143,11 @@ deployed to Vercel. Deploy the backend first, then set the frontend's API URL.
 4. Deploy the project and copy its public URL.
 5. Add that exact Vercel URL to Render's `FRONTEND_ORIGINS`, then redeploy the
    backend. This allows the browser site to call the API.
-
 Google sign-in is optional for the first deployment; Guest mode works without
 it. Add the `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` variables in
 Vercel only after Supabase Google sign-in has been configured. Never put
 Tavily or Gemini server keys in Vercel.
-
 ## Learning roadmap
-
 1. Connect the React form to FastAPI (complete).
 2. Configure Supabase Google sign-in and user-specific claim history (current
    milestone; requires your Supabase and Google setup).
@@ -167,3 +156,8 @@ Tavily or Gemini server keys in Vercel.
 5. Add browser tests with Playwright.
 6. Package and deploy the app with Docker, Render, and Vercel.
 7. Use Git and GitHub to track and share changes.
+
+
+
+
+just a normal site to check facts not 100% accurate.
