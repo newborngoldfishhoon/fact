@@ -11,13 +11,11 @@ starting point, not definitive proof; read the linked sources.
 - `backend/`: Python API built with FastAPI.
 - `FactCheck AI – UI preview.html`: the original static design preview.
 
+
+   
 The browser sends JSON to `POST /api/claims`; FastAPI checks the input and sends
 JSON back. `GET /api/health` is a simple way to check whether the backend is
 running. FastAPI also generates interactive API documentation.
-
-## Start the project on Windows
-
-You need Node.js/npm and Python installed. Open **two PowerShell terminals**.
 
 ### Terminal 1: start the backend
 
